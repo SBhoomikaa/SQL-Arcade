@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* This is a fallback, the font is set in tailwind.config.ts */
+  font-family: 'Inter', sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 330 67% 96%;
+    --foreground: 262 50% 20%;
+    --card: 330 67% 100%;
+    --card-foreground: 262 50% 20%;
+    --popover: 330 67% 100%;
+    --popover-foreground: 262 50% 20%;
+    --primary: 262 52% 51%;
+    --primary-foreground: 330 67% 98%;
+    --secondary: 262 50% 90%;
+    --secondary-foreground: 262 50% 20%;
+    --muted: 262 50% 94%;
+    --muted-foreground: 262 50% 45%;
+    --accent: 90 97% 55%;
+    --accent-foreground: 90 97% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 262 50% 88%;
+    --input: 262 50% 88%;
+    --ring: 262 52% 51%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+
+    /* Sidebar Theme */
+    --sidebar-background: 262 45% 38%; /* Darker purple */
+    --sidebar-foreground: 262 50% 95%;
+    --sidebar-primary: 90 97% 55%; /* Accent green as primary action in sidebar */
+    --sidebar-primary-foreground: 90 97% 10%;
+    --sidebar-accent: 262 48% 45%;
+    --sidebar-accent-foreground: 262 50% 98%;
+    --sidebar-border: 262 45% 30%;
+    --sidebar-ring: 90 97% 55%;
+  }
+
+  .dark {
+    --background: 262 15% 10%;
+    --foreground: 262 15% 85%;
+    --card: 262 15% 15%;
+    --card-foreground: 262 15% 85%;
+    --popover: 262 15% 15%;
+    --popover-foreground: 262 15% 85%;
+    --primary: 262 62% 61%;
+    --primary-foreground: 262 15% 98%;
+    --secondary: 262 15% 25%;
+    --secondary-foreground: 262 15% 90%;
+    --muted: 262 15% 25%;
+    --muted-foreground: 262 15% 65%;
+    --accent: 90 80% 60%;
+    --accent-foreground: 90 80% 5%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 262 15% 25%;
+    --input: 262 15% 25%;
+    --ring: 262 62% 61%;
+
+    /* Sidebar Dark Theme */
+    --sidebar-background: 262 15% 12%;
+    --sidebar-foreground: 262 15% 88%;
+    --sidebar-primary: 90 80% 60%;
+    --sidebar-primary-foreground: 90 80% 5%;
+    --sidebar-accent: 262 15% 20%;
+    --sidebar-accent-foreground: 262 15% 95%;
+    --sidebar-border: 262 15% 18%;
+    --sidebar-ring: 90 80% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
