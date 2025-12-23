@@ -67,7 +67,7 @@ const analyzeCsvDataFlow = ai.defineFlow(
     outputSchema: AnalyzeCsvDataOutputSchema,
   },
   async (input) => {
-    const { output } = await prompt(input, { model: 'googleai/gemini-1.5-flash-latest'});
+    const { output } = await prompt(input, { model: 'googleai/gemini-2.5-flash'});
     if (!output) {
       throw new Error('AI failed to produce a valid analysis.');
     }
