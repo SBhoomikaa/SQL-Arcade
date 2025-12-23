@@ -1,0 +1,104 @@
+/* =========================
+   CLEAN SLATE
+========================= */
+DROP TABLE IF EXISTS WORKS_ON;
+DROP TABLE IF EXISTS PROJECT;
+DROP TABLE IF EXISTS EMPLOYEE;
+DROP TABLE IF EXISTS DEPARTMENT;
+
+/* =========================
+   DEPARTMENT
+========================= */
+CREATE TABLE DEPARTMENT (
+  Dnumber INT PRIMARY KEY,
+  Dname VARCHAR(50) NOT NULL UNIQUE,
+  Mgr_ssn CHAR(9),
+  Mgr_start_date DATE
+);
+
+/* =========================
+   EMPLOYEE
+========================= */
+CREATE TABLE EMPLOYEE (
+  Fname VARCHAR(20) NOT NULL,
+  Lname VARCHAR(20) NOT NULL,
+  Ssn CHAR(9) PRIMARY KEY,
+  Sex CHAR(1) CHECK (Sex IN ('M','F')),
+  Salary INT,
+  Super_ssn CHAR(9),
+  Dno INT,
+
+  CONSTRAINT fk_emp_dept
+    FOREIGN KEY (Dno) REFERENCES DEPARTMENT(Dnumber),
+
+  CONSTRAINT fk_emp_super
+    FOREIGN KEY (Super_ssn) REFERENCES EMPLOYEE(Ssn)
+);
+
+/* =========================
+   PROJECT
+========================= */
+CREATE TABLE PROJECT (
+  Pnumber INT PRIMARY KEY,
+  Pname VARCHAR(50) NOT NULL,
+  Plocation VARCHAR(50),
+  Dnum INT,
+
+  CONSTRAINT fk_proj_dept
+    FOREIGN KEY (Dnum) REFERENCES DEPARTMENT(Dnumber)
+);
+
+/* =========================
+   WORKS_ON
+========================= */
+CREATE TABLE WORKS_ON (
+  Essn CHAR(9),
+  Pno INT,
+  Hours DECIMAL(4,1),
+
+  PRIMARY KEY (Essn, Pno),
+
+  CONSTRAINT fk_works_emp
+    FOREIGN KEY (Essn) REFERENCES EMPLOYEE(Ssn),
+
+  CONSTRAINT fk_works_proj
+    FOREIGN KEY (Pno) REFERENCES PROJECT(Pnumber)
+);
+
+/* =========================
+   SEED DATA (MEDIEVAL THEME)
+========================= */
+
+/* ---- DEPARTMENTS ---- */
+INSERT INTO DEPARTMENT VALUES
+(1, 'Royal Guard', NULL, '1400-01-01'),
+(2, 'Arcane Council', NULL, '1400-01-01'),
+(5, 'Research', NULL, '1400-01-01');
+
+/* ---- EMPLOYEES ---- */
+INSERT INTO EMPLOYEE VALUES
+('King', 'Arthur', '111111111', 'M', 90000, NULL, 1),
+('Sir', 'Lancelot', '222222222', 'M', 60000, '111111111', 1),
+('Sir', 'Gawain', '333333333', 'M', 45000, '222222222', 1),
+('Lady', 'Guinevere', '444444444', 'F', 70000, '111111111', 2),
+('Merlin', 'Ambrosius', '555555555', 'M', 80000, '444444444', 5),
+('Franklin', 'Wong', '666666666', 'M', 42000, '555555555', 5);
+
+/* ---- UPDATE MANAGERS ---- */
+UPDATE DEPARTMENT SET Mgr_ssn = '111111111' WHERE Dnumber = 1;
+UPDATE DEPARTMENT SET Mgr_ssn = '444444444' WHERE Dnumber = 2;
+UPDATE DEPARTMENT SET Mgr_ssn = '555555555' WHERE Dnumber = 5;
+
+/* ---- PROJECTS ---- */
+INSERT INTO PROJECT VALUES
+(10, 'Excalibur Forge', 'Camelot', 1),
+(20, 'Mage Registry', 'Avalon', 2),
+(30, 'Alchemy Lab', 'Houston', 5);
+
+/* ---- WORKS_ON ---- */
+INSERT INTO WORKS_ON VALUES
+('222222222', 10, 20.0),
+('333333333', 10, 15.0),
+('444444444', 20, 25.0),
+('555555555', 30, 30.0),
+('666666666', 30, 10.0);
