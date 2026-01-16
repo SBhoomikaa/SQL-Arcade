@@ -1,0 +1,7 @@
+StudentID,StudentName,StudentEmail,TeacherID,TeacherName,TeacherEmail,QuestID,QuestTitle,QuestDifficulty,QuestCategory,Score,CompletedAt
+S101,Rahul Sharma,rahul@gmail.com,T9001,Anita Verma,anita@college.edu,Q01,SELECT Basics,Beginner,Queries,85,2025-02-10
+S101,Rahul Sharma,rahul@gmail.com,T9001,Anita Verma,anita@college.edu,Q02,WHERE Clause,Beginner,Queries,90,2025-02-12
+S102,Priya Singh,priya@gmail.com,T9001,Anita Verma,anita@college.edu,Q01,SELECT Basics,Beginner,Queries,88,2025-02-11
+S102,Priya Singh,priya@gmail.com,T9001,Anita Verma,anita@college.edu,Q03,JOINS,Intermediate,Relationships,75,2025-02-15
+S103,Arjun Mehta,arjun@gmail.com,T9002,Ravi Kumar,ravi@college.edu,Q02,WHERE Clause,Beginner,Queries,92,2025-02-13
+S103,Arjun Mehta,arjun@gmail.com,T9002,Ravi Kumar,ravi@college.edu,Q04,Subqueries,Advanced,Optimization,68,2025-02-18
