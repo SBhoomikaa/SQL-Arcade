@@ -462,7 +462,7 @@ import QuestClient from './QuestClient.tsx';
 
 // This allows the page to be dynamic based on the URL parameter
 export default async function QuestPage({ params }: { params: { questId: string } }) {
-  const { questId } = params;
+  const { questId } = await params;
 
   return (
     <Suspense fallback={
