@@ -45,11 +45,11 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  turbo: {
-    resolveAlias: {
-      '@mapbox/node-pre-gyp': false,
-    },
-  },
+  // turbo: {
+  //   resolveAlias: {
+  //     '@mapbox/node-pre-gyp': false,
+  //   },
+  // },
 };
 
 export default nextConfig;

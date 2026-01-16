@@ -1,6 +1,8 @@
 
 'use client';
 
+
+import { Suspense } from 'react';
 import { useState, useEffect } from 'react';
 import { MainLayout } from '@/components/layout/main-layout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
@@ -78,7 +80,8 @@ export default function QuestsPage() {
 
   return (
     <MainLayout>
-      <div className="flex flex-col gap-4">
+      <Suspense fallback={<div className="p-6">Loading quests...</div>}>
+        <div className="flex flex-col gap-4">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold tracking-tight">{getPageTitle()}</h1>
           <p className="text-muted-foreground">
@@ -135,7 +138,27 @@ export default function QuestsPage() {
             </CardContent>
           </Card>
         )}
-      </div>
+        </div>
+      
+      </Suspense>
+      
     </MainLayout>
   );
 }
+
+
+
+
+// import { Suspense } from 'react'
+// import QuestsClient from './QuestsClient'
+// import { MainLayout } from '@/components/layout/main-layout'
+
+// export default function QuestsPage() {
+//   return (
+//     <MainLayout>
+//       <Suspense fallback={<div className="p-6">Loading quests...</div>}>
+//         <QuestsClient />
+//       </Suspense>
+//     </MainLayout>
+//   )
+// }

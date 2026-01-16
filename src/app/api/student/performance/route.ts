@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if quest already completed
-    const alreadyCompleted = student.completedQuests.some(q => q.questId === questId);
+    const alreadyCompleted = student.completedQuests.some((q: { questId: any; }) => q.questId === questId);
     if (alreadyCompleted) {
       return NextResponse.json(
         { error: 'Quest already completed' },
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     student.performance.totalTimeSolving += timeTaken || 0;
 
     const difficultyKey = difficulty.toLowerCase();
-    if (student.performance.questsSolvedByDifficulty[difficultyKey as keyof typeof student.performance.questsSolvedByDifficulty]) {
+    if (difficultyKey in student.performance.questsSolvedByDifficulty) {
       student.performance.questsSolvedByDifficulty[difficultyKey as keyof typeof student.performance.questsSolvedByDifficulty]++;
     }
 
