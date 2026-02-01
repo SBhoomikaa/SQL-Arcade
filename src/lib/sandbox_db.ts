@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { pool } from './db';
+import 'server-only';
 
 function dbNameFromSandbox(sandboxId: string) {
   return 'sandbox_' + sandboxId.replace(/-/g, '').slice(0, 50);

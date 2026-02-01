@@ -3,13 +3,25 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/components/ui/select';
 import { quests as defaultQuests } from '@/lib/quests';
-// We still keep getCustomQuests for now if those are strictly local, 
-// unless you have a backend route for custom quests too.
-import { getCustomQuests } from '@/lib/progress'; 
+import { getCustomQuests } from '@/lib/progress';
 import type { Quest } from '@/lib/types/quests';
 import { CheckCircle, Loader2 } from 'lucide-react';
 
@@ -22,46 +34,43 @@ export default function QuestsClient() {
   const [completedQuests, setCompletedQuests] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Define the fetch logic
+  /* ---------- TEMPLATE SELECTION ---------- */
+  const [selectedTemplate, setSelectedTemplate] =
+    useState('medieval_kingdom');
+
   const fetchProgress = useCallback(async () => {
     const token = localStorage.getItem('authToken');
-    
-    // 1. Get Custom Quests (Local/Hybrid)
-    const customQuests = getCustomQuests(); 
+
+    const customQuests = getCustomQuests();
     setAllQuests([...defaultQuests, ...customQuests]);
 
     if (!token) {
-        setIsLoading(false);
-        return;
+      setIsLoading(false);
+      return;
     }
 
     try {
-      // 2. Get Completed Quests (From MongoDB)
       const res = await fetch('/api/student/profile', {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
 
       if (data.success && data.student) {
-        // Map the object array [{questId: 'q1'}] -> string array ['q1']
-        const ids = data.student.completedQuests.map((q: any) => q.questId);
+        const ids = data.student.completedQuests.map(
+          (q: any) => q.questId
+        );
         setCompletedQuests(ids);
       }
     } catch (error) {
-      console.error("Failed to sync quests:", error);
+      console.error('Failed to sync quests:', error);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    // Initial Fetch
     fetchProgress();
-
-    // Listen for updates (e.g., if user completes a quest in a different tab/component)
-    // When triggered, we re-fetch from the Server to be sure.
     window.addEventListener('progressUpdated', fetchProgress);
-
     return () => {
       window.removeEventListener('progressUpdated', fetchProgress);
     };
@@ -97,31 +106,71 @@ export default function QuestsClient() {
   };
 
   if (isLoading) {
-     return (
-        <div className="flex justify-center items-center h-64">
-           <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
-     );
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold tracking-tight">{getPageTitle()}</h1>
-        <p className="text-muted-foreground">{getPageDescription()}</p>
+      {/* ---------- HEADER ---------- */}
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold tracking-tight">
+            {getPageTitle()}
+          </h1>
+          <p className="text-muted-foreground">
+            {getPageDescription()}
+          </p>
+        </div>
+
+        {/* ---------- TEMPLATE DROPDOWN ---------- */}
+        <div className="w-64">
+          <Select
+            value={selectedTemplate}
+            onValueChange={setSelectedTemplate}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select SQL template" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="medieval_kingdom">
+                Medieval Kingdom (Employees)
+              </SelectItem>
+              <SelectItem value="bachchan_vault">
+                Bachchan Vault (Movies)
+              </SelectItem>
+              <SelectItem value="desi_traders">
+                Desi Traders (Sales)
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
+      {/* ---------- QUEST GRID ---------- */}
       {filteredQuests.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredQuests.map((quest) => {
             const isCompleted = completedQuests.includes(quest.id);
 
+            const resolvedQuestId = `${quest.id}__${selectedTemplate}`;
+
             return (
-              <Card key={quest.id} className={`flex flex-col ${isCompleted ? 'bg-muted/50' : ''}`}>
+              <Card
+                key={quest.id}
+                className={`flex flex-col ${
+                  isCompleted ? 'bg-muted/50' : ''
+                }`}
+              >
                 <CardHeader>
                   <div className="flex justify-between items-start gap-2">
                     <CardTitle className="flex items-center gap-2">
-                      {isCompleted && <CheckCircle className="text-green-500" />}
+                      {isCompleted && (
+                        <CheckCircle className="text-green-500" />
+                      )}
                       {quest.title}
                     </CardTitle>
 
@@ -134,18 +183,18 @@ export default function QuestsClient() {
                             ? 'outline'
                             : 'default'
                         }
-                        className={
-                          quest.difficulty === 'Advanced'
-                            ? 'bg-primary/20 text-primary border-primary/50'
-                            : ''
-                        }
                       >
                         {quest.difficulty}
                       </Badge>
 
-                      {quest.isCustom && <Badge variant="destructive">Custom</Badge>}
+                      {quest.isCustom && (
+                        <Badge variant="destructive">Custom</Badge>
+                      )}
                       {isCompleted && (
-                        <Badge variant="default" className="bg-green-600">
+                        <Badge
+                          variant="default"
+                          className="bg-green-600"
+                        >
                           Completed
                         </Badge>
                       )}
@@ -155,12 +204,18 @@ export default function QuestsClient() {
                 </CardHeader>
 
                 <CardContent className="flex-1">
-                  <p className="text-sm text-muted-foreground">{quest.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {quest.description}
+                  </p>
                 </CardContent>
 
                 <CardFooter>
-                  <Button asChild className="w-full" variant={isCompleted ? 'secondary' : 'default'}>
-                    <Link href={`/quests/${quest.id}`}>
+                  <Button
+                    asChild
+                    className="w-full"
+                    variant={isCompleted ? 'secondary' : 'default'}
+                  >
+                    <Link href={`/quests/${resolvedQuestId}`}>
                       {isCompleted ? 'Retry Quest' : 'Start Quest'}
                     </Link>
                   </Button>

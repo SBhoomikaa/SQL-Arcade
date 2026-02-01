@@ -53,5 +53,6 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+reactStrictMode: false
 
     
