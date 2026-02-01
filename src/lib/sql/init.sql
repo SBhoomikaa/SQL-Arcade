@@ -43,28 +43,49 @@ CREATE TABLE WORKS_ON (
     CONSTRAINT fk_works_proj FOREIGN KEY (Pno) REFERENCES PROJECT(Pnumber)
 );
 
--- Seed Data
-INSERT INTO DEPARTMENT VALUES
-(1, 'Royal Guard', '111111111', '1400-01-01'),
-(2, 'Arcane Council', '444444444', '1400-01-01'),
-(5, 'Research', '555555555', '1400-01-01');
+-- -------------------------
+-- STEP 1: DEPARTMENTS (NO MANAGERS YET)
+-- -------------------------
+INSERT INTO DEPARTMENT (Dnumber, Dname, Mgr_ssn, Mgr_start_date) VALUES
+(1, 'Royal Guard', NULL, NULL),
+(2, 'Arcane Council', NULL, NULL),
+(5, 'Research', NULL, NULL);
+
+-- -------------------------
+-- STEP 2: EMPLOYEES (TOP → DOWN)
+-- -------------------------
+INSERT INTO EMPLOYEES VALUES
+('King', 'Arthur', '111111111', 'M', 90000, NULL, 1);
 
 INSERT INTO EMPLOYEES VALUES
-('King', 'Arthur', '111111111', 'M', 90000, NULL, 1),
 ('Sir', 'Lancelot', '222222222', 'M', 60000, '111111111', 1),
 ('Sir', 'Gawain', '333333333', 'M', 45000, '222222222', 1),
 ('Lady', 'Guinevere', '444444444', 'F', 70000, '111111111', 2),
 ('Merlin', 'Ambrosius', '555555555', 'M', 80000, '444444444', 5);
 
+-- -------------------------
+-- STEP 3: ASSIGN MANAGERS
+-- -------------------------
+UPDATE DEPARTMENT SET Mgr_ssn='111111111', Mgr_start_date='1400-01-01' WHERE Dnumber=1;
+UPDATE DEPARTMENT SET Mgr_ssn='444444444', Mgr_start_date='1400-01-01' WHERE Dnumber=2;
+UPDATE DEPARTMENT SET Mgr_ssn='555555555', Mgr_start_date='1400-01-01' WHERE Dnumber=5;
+
+-- -------------------------
+-- STEP 4: PROJECTS
+-- -------------------------
 INSERT INTO PROJECT VALUES
 (10, 'Excalibur Forge', 'Camelot', 1),
 (20, 'Mage Registry', 'Avalon', 2),
 (30, 'Alchemy Lab', 'Houston', 5);
 
+-- -------------------------
+-- STEP 5: WORKS_ON
+-- -------------------------
 INSERT INTO WORKS_ON VALUES
 ('222222222', 10, 20.0),
 ('333333333', 10, 15.0),
 ('444444444', 20, 25.0);
+
 
 
 

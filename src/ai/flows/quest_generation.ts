@@ -213,7 +213,7 @@ SHORT DESCRIPTION:
 DIFFICULTY:
 {{difficulty}}
 
-INSTRUCTIONS: ...
+INSTRUCTIONS: The english needs to be simple and the text needs to generated in such a way that it can be executed in a single query(no questions with multiple query solutions).Keep the schema in mind
 `,
 });
 
