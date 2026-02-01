@@ -1,15 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { quests as defaultQuests } from '@/lib/quests';
-import { getCustomQuests, getCompletedQuests } from '@/lib/progress';
+// We still keep getCustomQuests for now if those are strictly local, 
+// unless you have a backend route for custom quests too.
+import { getCustomQuests } from '@/lib/progress'; 
 import type { Quest } from '@/lib/types/quests';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Loader2 } from 'lucide-react';
 
 export default function QuestsClient() {
   const searchParams = useSearchParams();
@@ -18,22 +20,52 @@ export default function QuestsClient() {
 
   const [allQuests, setAllQuests] = useState<Quest[]>([]);
   const [completedQuests, setCompletedQuests] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Define the fetch logic
+  const fetchProgress = useCallback(async () => {
+    const token = localStorage.getItem('authToken');
+    
+    // 1. Get Custom Quests (Local/Hybrid)
+    const customQuests = getCustomQuests(); 
+    setAllQuests([...defaultQuests, ...customQuests]);
+
+    if (!token) {
+        setIsLoading(false);
+        return;
+    }
+
+    try {
+      // 2. Get Completed Quests (From MongoDB)
+      const res = await fetch('/api/student/profile', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+
+      if (data.success && data.student) {
+        // Map the object array [{questId: 'q1'}] -> string array ['q1']
+        const ids = data.student.completedQuests.map((q: any) => q.questId);
+        setCompletedQuests(ids);
+      }
+    } catch (error) {
+      console.error("Failed to sync quests:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const updateQuests = () => {
-      const customQuests = getCustomQuests();
-      const completed = getCompletedQuests();
-      setAllQuests([...defaultQuests, ...customQuests]);
-      setCompletedQuests(completed);
-    };
+    // Initial Fetch
+    fetchProgress();
 
-    updateQuests();
-    window.addEventListener('progressUpdated', updateQuests);
+    // Listen for updates (e.g., if user completes a quest in a different tab/component)
+    // When triggered, we re-fetch from the Server to be sure.
+    window.addEventListener('progressUpdated', fetchProgress);
 
     return () => {
-      window.removeEventListener('progressUpdated', updateQuests);
+      window.removeEventListener('progressUpdated', fetchProgress);
     };
-  }, []);
+  }, [fetchProgress]);
 
   const filteredQuests = allQuests.filter((quest) => {
     const searchMatch = searchQuery
@@ -63,6 +95,14 @@ export default function QuestsClient() {
     }
     return 'Embark on quests to master SQL commands, constraints, and more.';
   };
+
+  if (isLoading) {
+     return (
+        <div className="flex justify-center items-center h-64">
+           <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+     );
+  }
 
   return (
     <div className="flex flex-col gap-4">
