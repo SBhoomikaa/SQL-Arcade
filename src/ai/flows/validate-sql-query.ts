@@ -4,9 +4,10 @@ import { ensureSandboxDb } from '@/lib/sandbox_db';
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { pool } from '@/lib/db';
+import { verifyToken } from '@/lib/auth-utils';
+import { cookies } from 'next/headers';
 
 const ValidateSQLQueryInputSchema = z.object({
-  sandboxId: z.string(),
   userQuery: z.string(),
   correctQuery: z.string(),
   questDescription: z.string(),
@@ -62,8 +63,26 @@ export async function getLiveTableContext(dbName: string, tableNames: string[]) 
 }
 
 export async function validateSQLQuery(input: ValidateSQLQueryInput) {
-  // 🔑 Ensure sandbox DB exists and is initialized
-  const dbName = await ensureSandboxDb(input.sandboxId);
+
+  // 🔐 AUTH
+  const cookieStore = await cookies();
+  const token = cookieStore.get('authToken')?.value;
+
+  if (!token) {
+    throw new Error('Unauthorized');
+  }
+
+  const decoded = verifyToken(token);
+
+  if (!decoded || (decoded as any).role !== 'student') {
+    throw new Error('Unauthorized');
+  }
+
+  const userId = (decoded as any).userId;
+
+  // 🧪 SANDBOX
+  const sandboxId = `sandbox_${userId}`;
+  const dbName = await ensureSandboxDb(sandboxId);
 
   const connection = await pool.getConnection();
 
