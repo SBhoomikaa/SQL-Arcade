@@ -319,4 +319,77 @@ export const quests: Quest[] = [
       { Fname: 'Merlin', Lname: 'Ambrosius' }
     ]
   }
+  {
+    id:'not-null',
+    title: 'The NOT NULL Constraint',
+    description: 'Enforce a not null constraint on a non-primary key attribute.',
+    longDescription: "The King wants to ensure that all employees have a supervisor assigned. Retrieve the first and last names of employees who have a supervisor (i.e., where `Super_ssn` is not NULL).",
+    difficulty: 'Beginner',
+    category: 'Constraints',
+    initialQuery: "SELECT Fname, Lname FROM EMPLOYEES\nWHERE Super_ssn IS NOT NULL;",
+    correctQuery: "SELECT Fname, Lname FROM EMPLOYEES WHERE Super_ssn IS NOT NULL",
+    successMessage: "Great job! You've successfully enforced the NOT NULL constraint.", 
+    schema: [{ tableName: 'EMPLOYEES', columns: [{ name: 'Fname', type: 'VARCHAR(20)' }, { name: 'Lname', type: 'VARCHAR(20)' }, { name: 'Super_ssn', type: 'CHAR(9)' }] }],
+    resultData: [
+      { Fname: 'Sir', Lname: 'Galahad' },
+      { Fname: 'Lady', Lname: 'Guinevere' },
+      { Fname: 'Merlin', Lname: 'Ambrosius' },
+      { Fname: 'Franklin', Lname: 'Harrington' }
+    ]
+  },
+  {
+    id:'unique-constraint',
+    title: 'The UNIQUE Constraint',
+    description: 'Enforce a unique constraint on an attribute.',
+    longDescription: "The King wants to ensure that all department names are unique. Retrieve the department names from the `DEPARTMENT` table to verify that there are no duplicates.",
+    difficulty: 'Beginner',
+    category: 'Constraints',
+    initialQuery: "SELECT DISTINCT Dname FROM DEPARTMENT;",
+    correctQuery: "SELECT DISTINCT Dname FROM DEPARTMENT",
+    successMessage: "Well done! You've successfully enforced the UNIQUE constraint.",
+    schema: [{ tableName: 'DEPARTMENT', columns: [{ name: 'Dname', type: 'VARCHAR(50)' }] }],
+    resultData: [
+      { Dname: 'Royal Guard' },
+      { Dname: 'Arcane Council' },
+      { Dname: 'Research' }
+    ]
+  },
+  {
+    id:'check-constraint',
+    title: 'The CHECK Constraint',
+    description: 'Enforce a check constraint on an attribute.', 
+    longDescription: "The King wants to ensure that all employees have a salary greater than 30,000 gold pieces. Retrieve the first and last names of employees who meet this salary requirement.",
+    difficulty: 'Beginner',
+    category: 'Constraints',
+    initialQuery: "SELECT Fname, Lname FROM EMPLOYEES\nWHERE Salary > 30000;",
+    correctQuery: "SELECT Fname, Lname FROM EMPLOYEES WHERE Salary > 30000",
+    successMessage: "Excellent! You've successfully enforced the CHECK constraint.",
+    schema: [{ tableName: 'EMPLOYEES', columns: [{ name: 'Fname', type: 'VARCHAR(20)' }, { name: 'Lname', type: 'VARCHAR(20)' }, { name: 'Salary', type: 'INT' }] }],
+    resultData: [
+      { Fname: 'King', Lname: 'Arthur' },
+      { Fname: 'Sir', Lname: 'Lancelot' },
+      { Fname: 'Sir', Lname: 'Gawain' },
+      { Fname: 'Lady', Lname: 'Guinevere' },
+    ]
+  },
+  {
+    id:'default-constraint',
+    title: 'The DEFAULT Constraint',
+    description: 'Utilize a default constraint for an attribute.',
+    longDescription: "The King wants to ensure that any new employee added to the `EMPLOYEES` table has a default department number of 1 (Royal Guard) if none is specified. Retrieve the first and last names along with their department numbers to verify this default behavior.",
+    difficulty: 'Beginner',
+    category: 'Constraints',
+    initialQuery: "SELECT Fname, Lname, Dno FROM EMPLOYEES;",
+    correctQuery: "SELECT Fname, Lname, Dno FROM EMPLOYEES",
+    successMessage: "Great work! You've successfully utilized the DEFAULT constraint.",
+    schema: [{ tableName: 'EMPLOYEES', columns: [{ name: 'Fname', type: 'VARCHAR(20)' }, { name: 'Lname', type: 'VARCHAR(20)' }, { name: 'Dno', type: 'INT' }] }],
+    resultData: [
+      { Fname: 'King', Lname: 'Arthur', Dno: 1 },
+      { Fname: 'Sir', Lname: 'Lancelot', Dno: 1 },
+      { Fname: 'Sir', Lname: 'Gawain', Dno: 1 },
+      { Fname: 'Lady', Lname: 'Guinevere', Dno: 2 },
+      { Fname: 'Merlin', Lname: 'Ambrosius', Dno: 5 },
+      { Fname: 'Franklin', Lname: 'Wong', Dno: 5 }
+    ]
+  }
 ];
