@@ -214,7 +214,7 @@ DIFFICULTY:
 {{difficulty}}
 
 INSTRUCTIONS: The english needs to be simple and the text needs to generated in such a way that it can be executed in a single query(no questions with multiple query solutions).Keep the schema in mind
-Provide all the information necessary for the user to formulate the query in one shot. For not-null,check and unique constraint questions ensure that the seed data provided does not already violate those constraints.`,
+Provide all the information necessary for the user to formulate the query in one shot. For not-null,check and unique constraint questions ensure that the seed data provided does not already violate those constraints.Also do not name the constraints in the correct query for all the constraint queries(IMPORTANT)`,
 });
 
 export async function generateQuestFromTemplate(input: GenerateQuestInput) {
