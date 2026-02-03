@@ -27,8 +27,7 @@ const menuItems = [
   { href: '/', label: 'Dashboard', icon: Home },
   { href: '/quests', label: 'SQL Quests', icon: Database },
   { href: '/normalization-puzzles', label: 'Normalization Puzzles', icon: Puzzle },
-  { href: '/explore', label: 'Explore Datasets', icon: FileUp },
-  { href: '/ai-tools', label: 'AI Tools', icon: Sparkles },
+  { href: '/ai-tools', label: 'AI Tools', icon: Sparkles }
 ];
 
 export function MainSidebar() {
