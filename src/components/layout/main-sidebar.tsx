@@ -133,6 +133,7 @@ function getRank(completedCount: number) {
 }
 
 export function MainSidebar() {
+  const hasFetchedOnce = useRef(false);
   const pathname = usePathname();
 
   const [profile, setProfile] = useState<UserProfile>({
