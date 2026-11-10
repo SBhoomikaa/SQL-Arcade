@@ -90,7 +90,7 @@ export function MainSidebar() {
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -140,7 +140,7 @@ export function MainSidebar() {
     completedQuestCount: 0,
   });
 
-  useEffect(() => {
+  /*useEffect(() => {
     async function loadProfile() {
       try {
         const response = await fetch('/api/student/profile');
@@ -164,8 +164,37 @@ export function MainSidebar() {
       loadProfile();
     }
     //loadProfile();
-  }, [pathname]);
+  }, [pathname]);*/
+  useEffect(() => {
+  if (pathname !== '/' && hasFetchedOnce.current) {
+    return;
+  }
 
+  async function loadProfile() {
+    try {
+      const response = await fetch('/api/student/profile');
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch student profile');
+      }
+
+      const data = await response.json();
+      const student = data.student;
+
+      setProfile({
+        name: student.name,
+        completedQuestCount: student.completedQuests.length,
+      });
+
+      hasFetchedOnce.current = true;
+
+    } catch (error) {
+      console.error('Failed to load profile:', error);
+    }
+  }
+
+  loadProfile();
+}, [pathname]);
   const rank = getRank(profile.completedQuestCount);
 
   return (
