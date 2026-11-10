@@ -213,9 +213,19 @@ SHORT DESCRIPTION:
 DIFFICULTY:
 {{difficulty}}
 
-INSTRUCTIONS: The english needs to be simple and the text needs to generated in such a way that it can be executed in a single query(no questions with multiple query solutions).Keep the schema in mind
-Provide all the information necessary for the user to formulate the query in one shot. For not-null,check and unique constraint questions ensure that the seed data provided does not already violate those constraints.Also do not name the constraints in the correct query for all the constraint queries(IMPORTANT)
-The generated question shouldn't demand addition of columns and other data modification unless related to that exercise.`,
+INSTRUCTIONS:Here is a plain text version with no formatting, ready to send:
+
+Follow every rule below strictly when you write SQL practice questions. Use simple, plain English with short sentences and common everyday words. Do not use hard or rare words, long sentences, or tricky wording. Say exactly what the learner needs to do.
+
+Every question must be answerable with one single SQL query. Do not write a question that can be solved in more than one way that gives a different result. There must be one clear correct answer. Do not ask for several statements or for step one and then step two.
+
+Each question must test only one concept. Do not mix concepts such as joins, subqueries, grouping, and filters in one question. Keep the difficulty at the level asked. For beginner level, use the simplest form of that one concept.
+
+Give all the information the learner needs to write the query in one go. Include the table names, column names, data types, and the exact values, order, or limits to use. Keep the schema in mind and only use tables and columns that exist in it. Do not make the learner guess any names, values, or formats.
+
+For questions about not null, check, and unique constraints, make sure the seed data you give does not already break the constraint. Check every row before you write the question. Do not name the constraint in the correct query. Write the constraint inline and do not use the CONSTRAINT keyword with a name.
+
+Do not ask the learner to add columns, change tables, or change data unless that is exactly what the exercise is about.`,
 });
 
 export async function generateQuestFromTemplate(input: GenerateQuestInput) {
