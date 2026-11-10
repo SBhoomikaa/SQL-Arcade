@@ -170,10 +170,10 @@ import QuestsClient from './QuestsClient.tsx'
 
 export default function QuestsPage() {
   return (
-    <MainLayout>
+    //<MainLayout>
       <Suspense fallback={<div className="p-6">Loading quests...</div>}>
         <QuestsClient />
       </Suspense>
-    </MainLayout>
+    //</MainLayout>
   )
 }

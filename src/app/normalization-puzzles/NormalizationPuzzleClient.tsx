@@ -97,7 +97,7 @@ export default function NormalizationPuzzleClient() {
   };
 
   return (
-    <MainLayout>
+    //<MainLayout>
       <div className="flex flex-col gap-8">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold tracking-tight">Normalization Puzzle</h1>
@@ -193,6 +193,6 @@ export default function NormalizationPuzzleClient() {
           </div>
         )}
       </div>
-    </MainLayout>
+    //</MainLayout>
   );
 }

@@ -152,7 +152,7 @@ export default function ExploreClient() {
   };
 
   return (
-    <MainLayout>
+    //<MainLayout>
       <div className="flex flex-col gap-6">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold tracking-tight">Explore Your Data</h1>
@@ -243,6 +243,6 @@ export default function ExploreClient() {
           </div>
         )}
       </div>
-    </MainLayout>
+    //</MainLayout>
   );
 }

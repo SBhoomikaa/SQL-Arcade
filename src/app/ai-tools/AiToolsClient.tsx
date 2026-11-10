@@ -73,7 +73,7 @@ export default function AiToolsClient() {
   };
 
   return (
-    <MainLayout>
+    //<MainLayout>
       <div className="flex flex-col gap-6">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold tracking-tight">AI Tools</h1>
@@ -126,6 +126,6 @@ export default function AiToolsClient() {
           </CardContent>
         </Card>
       </div>
-    </MainLayout>
+    //</MainLayout>
   );
 }

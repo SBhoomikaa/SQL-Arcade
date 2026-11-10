@@ -318,7 +318,7 @@ useEffect(() => {
   );
 
   return (
-    <MainLayout>
+    //<MainLayout>
       {isLoading ? (
         <div className="flex items-center justify-center h-64">
           <Loader2 className="animate-spin" />
@@ -480,6 +480,6 @@ useEffect(() => {
         </div>
         
       )}
-    </MainLayout>
+    //</MainLayout>
   );
 }
