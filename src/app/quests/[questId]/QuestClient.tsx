@@ -370,12 +370,12 @@ useEffect(() => {
                   <Button variant="outline" onClick={() => setQuery('')}>
                     Reset
                   </Button>
-                  <Button
+                  /*<Button
                     variant="secondary"
                     onClick={() => setQuery(quest.correctQuery)}
                   >
                     <Eye className="mr-2 h-4 w-4" /> Show Answer
-                  </Button>
+                  </Button>*/
                 </div>
               </CardContent>
             </Card>
