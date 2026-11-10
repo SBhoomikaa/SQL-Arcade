@@ -8,6 +8,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   const isExcluded =
+    pathname === '/' ||
     pathname === '/login' ||
     pathname === '/signup' ||
     pathname.startsWith('/teacher');

@@ -174,7 +174,7 @@ export default function DashboardClient() {
   ];
 
   return (
-    //<MainLayout>
+    <MainLayout>
       <div className="space-y-6">
         <div className="flex justify-between items-start">
           <div>
@@ -275,6 +275,6 @@ export default function DashboardClient() {
           ))}
         </div>
       </div>
-    //</MainLayout>
+    </MainLayout>
   );
 }
