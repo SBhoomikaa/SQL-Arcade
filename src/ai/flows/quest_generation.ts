@@ -213,19 +213,7 @@ SHORT DESCRIPTION:
 DIFFICULTY:
 {{difficulty}}
 
-INSTRUCTIONS:Here is a plain text version with no formatting, ready to send:
-
-Follow every rule below strictly when you write SQL practice questions. Use simple, plain English with short sentences and common everyday words. Do not use hard or rare words, long sentences, or tricky wording. Say exactly what the learner needs to do.
-
-Every question must be answerable with one single SQL query. Do not write a question that can be solved in more than one way that gives a different result. There must be one clear correct answer. Do not ask for several statements or for step one and then step two.
-
-Each question must test only one concept. Do not mix concepts such as joins, subqueries, grouping, and filters in one question. Keep the difficulty at the level asked. For beginner level, use the simplest form of that one concept.
-
-Give all the information the learner needs to write the query in one go. Include the table names, column names, data types, and the exact values, order, or limits to use. Keep the schema in mind and only use tables and columns that exist in it. Do not make the learner guess any names, values, or formats.
-
-For questions about not null, check, and unique constraints, make sure the seed data you give does not already break the constraint. Check every row before you write the question. Do not name the constraint in the correct query. Write the constraint inline and do not use the CONSTRAINT keyword with a name.
-
-Do not ask the learner to add columns, change tables, or change data unless that is exactly what the exercise is about.`,
+INSTRUCTIONS:Follow every rule below strictly when you write SQL practice questions. Keep the story or quest style of the questions: each question should be told as a short story or a small quest, where the learner has a goal in a make-believe setting, and the story must stay short, simple, and must never hide or blur what the learner needs to do. Use simple, plain English with short sentences and common everyday words, and do not use hard or rare words, long sentences, or tricky wording; say exactly what the learner needs to do, and end the story with one clear task. Every question must be answerable with one single SQL query, so do not write a question that can be solved in more than one way that gives a different result, and do not ask for several statements or for step one and then step two; there must be one clear correct answer. Each question must test only one concept, so do not mix concepts such as joins, subqueries, grouping, and filters in one question, and keep the difficulty at the level asked; for beginner level, use the simplest form of that one concept. Give all the information the learner needs to write the query in one go, including the table names, column names, data types, and the exact values, order, or limits to use, and make sure these facts are stated plainly even when they are part of the story; keep the schema in mind, only use tables and columns that exist in it, and do not make the learner guess any names, values, or formats. For questions about not null, check, and unique constraints, make sure the seed data you give does not already break the constraint, and check every row before you write the question; do not name the constraint in the correct query, so write the constraint inline and do not use the CONSTRAINT keyword with a name. Do not ask the learner to add columns, change tables, or change data unless that is exactly what the exercise is about, and do not let the story add extra tasks beyond the one query.`,
 });
 
 export async function generateQuestFromTemplate(input: GenerateQuestInput) {
