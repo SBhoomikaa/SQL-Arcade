@@ -94,9 +94,3 @@ export const config = {
     '/dashboard/:path*',
   ],
 };
-
-}
-
-export const config = {
-  matcher: ['/teacher/:path*'],
-};
