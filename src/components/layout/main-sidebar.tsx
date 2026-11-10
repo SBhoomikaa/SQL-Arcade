@@ -241,7 +241,7 @@ export function MainSidebar() {
 
         <SidebarMenuButton size="lg" className="justify-start gap-2 px-2">
           <Avatar className="size-8">
-            <AvatarImage src="https://picsum.photos/seed/avatar/40/40" />
+            <AvatarImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbVkltri8mnTXru8s6phS8K2zl7VekFZM8veTq9-whZg&s=10" />
             <AvatarFallback>
               {profile.name ? profile.name.charAt(0).toUpperCase() : 'U'}
             </AvatarFallback>
