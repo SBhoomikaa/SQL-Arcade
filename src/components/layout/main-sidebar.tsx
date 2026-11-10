@@ -160,9 +160,11 @@ export function MainSidebar() {
         console.error('Failed to load profile:', error);
       }
     }
-
-    loadProfile();
-  }, []);
+    if (pathname === '/') {
+      loadProfile();
+    }
+    //loadProfile();
+  }, [pathname]);
 
   const rank = getRank(profile.completedQuestCount);
 
